@@ -45,7 +45,7 @@ export function loginUser(req,res){
     }).then(
         (user)=>{
             if(user == null){
-                res.status(404).json({
+                res.status(403).json({
                     message:"User not found"
                 }) 
             }else{
@@ -61,13 +61,13 @@ export function loginUser(req,res){
                             isBlocked : user.isBlocked,
                             isEmailVerified : user.isEmailVerified,
                             image : user.image
-                        },
-                        token,process.env.JWT_SECRET
+                        },process.env.JWT_SECRET
                     )
 
                     res.json({
                         token : token,
-                        message: "Login successful"
+                        message: "Login successful",
+                        role: user.role,
                     })
                 }else{
                     res.status(403).json({
